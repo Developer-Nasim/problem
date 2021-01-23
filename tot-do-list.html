@@ -1,0 +1,180 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>To do list</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<link rel="shortcut icon" type="image/x-icon" href="#">
+        <!-- Place favicon.ico in the root directory -->
+        
+		<!-- CSS here -->
+        <link rel="stylesheet" href="assets/css/bootstrap.min.css">  
+        <style>
+            
+
+
+.to-do {
+  padding: 80px 0;
+}
+
+.to-do form {
+  margin-bottom: 50px;
+}
+
+.to-do form h4 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 30px;
+}
+
+.form-control:focus {
+  box-shadow: none;
+}
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  box-shadow: none;
+}
+.to-do .list-group label.list-group-item {
+  position: relative;
+}
+
+.to-do .list-group label.list-group-item p {
+  position: absolute;
+  margin: 0;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+
+.to-do .list-group label.list-group-item input:checked ~ .content{
+  color: #0D6EFD;
+  text-decoration: line-through;
+}
+
+
+
+
+
+
+
+
+
+        </style>
+    </head>
+    <body>
+
+        
+        <div class="to-do">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 offset-lg-3">
+                        <form class="to-do-form">
+                            <h4>Let's go ahead with to do list</h4>
+                            <div class="mb-3">
+                              <label for="exampleInputEmail1" class="form-label">First name</label>
+                              <input type="text" class="form-control fname" id="addtodo">
+                              <label for="exampleInputEmail1" class="form-label mt-3">Last Name</label>
+                              <input type="text" class="form-control lname">
+                            </div> 
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+
+                        <div class="list-group">
+                            <label class="list-group-item">
+                              <input class="form-check-input me-1" type="checkbox" value="">
+                              <span class="content">Default Data</span>
+                              <p><span class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                              </svg></span></p>
+                            </label> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+		<!-- JS here --> 
+        <script src="assets/js/vendor/jquery-3.4.1.min.js"></script> 
+        <script src="assets/js/bootstrap.min.js"></script>  
+        <script>
+             
+
+let toDoForm = document.querySelector('.to-do-form'); 
+let lGroup   = document.querySelector('.list-group');
+let lgrroup  = document.querySelectorAll('.list-group .list-group-item');
+let deletess = document.querySelectorAll('p .delete');
+
+let fname = document.querySelector('.fname');
+let lname = document.querySelector('.lname'); 
+let emo   = [];
+
+toDoForm.addEventListener('submit', (e) => {
+    e.preventDefault(); 
+    if (fname.value == '' || lname == '') {
+      console.log('Sorry it\'s shold not be empty so please fill those fileds');
+    }else{  
+
+
+      let lv = document.createElement('label');
+      lv.classList.add('list-group-item')
+      let lc = `<input class="form-check-input me-1" type="checkbox" value=""><span class="content">${fname.value} ${lname.value}</span>
+      <p><span class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+        <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+      </svg></span></p>`;
+      lv.innerHTML = lc; 
+      lGroup.appendChild(lv);
+
+
+      let em = {
+        fname: `${fname.value}`,
+        lname: `${lname.value}`
+      }
+      emo.push(em);  
+      localStorage.setItem('fl_name', JSON.stringify(emo));  
+    }
+})
+
+
+
+
+ 
+window.addEventListener('load',ldts)
+function ldts() { 
+  let gtd = JSON.parse(localStorage.getItem('fl_name'));
+  if (gtd) {
+    for (let i = 0; i < gtd.length; i++) { 
+       let lv = document.createElement('label');
+        lv.classList.add('list-group-item')
+        let lc = `<input type="checkbox" class="form-check-input me-1"><span class="content">${gtd[i].fname} ${gtd[i].lname}</span>
+        <p><span class="delete"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+        </svg></span></p>`;
+        lv.innerHTML = lc; 
+        lGroup.appendChild(lv);
+    } 
+  } 
+}
+
+
+lgrroup.forEach(sgl => { 
+  sgl.addEventListener('click', (e) => { 
+    if (e.target.classList[0] == 'list-group-item') {  
+        sgl.remove();
+    }
+  })
+
+}) 
+
+
+
+
+
+
+ 
+        </script>
+    </body>
+</html>
